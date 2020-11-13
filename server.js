@@ -1,7 +1,12 @@
 const express = require('express');
+// require animals dataset
 const { animals } = require('./data/animals');
 const fs = require('fs');
 const path = require('path');
+
+// require routes since we mvoed them to a separate file
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
 
 const PORT = process.env.PORT || 3001;
 
@@ -11,6 +16,9 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+// add routing methods from files we crated
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 // declare 'public' folder as a static resource
 app.use(express.static('public'));
 
